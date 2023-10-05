@@ -7,10 +7,10 @@ import sqlite3 as sql
 import openai
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-openai.api_key = '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'
+openai.api_key = 'your Open-AI key'
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Registration_Database.db'
-app.config['SECRET_KEY'] = "12345"
+app.config['SECRET_KEY'] = "your secret key"
 db = SQLAlchemy(app)
 
 # Set up Flask-Login
@@ -113,10 +113,10 @@ def add_data():
             port = 465  # For SSL
             smtp_server = "smtp.gmail.com"
             # Default Mail from where confirmation mail will be send 
-            sender_email = "ayush0013000@gmail.com "
+            sender_email = "your sending mail "
             #receiver mail will be taken from submit from  
             receiver_email = request.form['email'] # Enter receiver address
-            password = 'tieqpziyvkrckavt'
+            password = 'your 2 step verification password'
             message = """Subject: Registration Form Submission
 
               Hello,
