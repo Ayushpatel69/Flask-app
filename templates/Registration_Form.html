@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration_Form</title>
+</head>
+
+<body>
+    
+    <div class="container mt-5">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form id="registration_details" action="/add_data" method="post"  >
+            <div>
+                <h1>Registration Form</h1>
+            </div>
+            
+            <fieldset>
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" placeholder="Enter First Name" name="first_name" maxlength="29" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Last Name" name="last_name" maxlength="29" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" placeholder="abc@gmail.com" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input name="password" id="password" type="password" placeholder="Enter Password" name="password" minlength="6" maxlength="12" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" placeholder="Re-enter Password" name="confirm_password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" class="form-control" placeholder="Enter Address Here" name="address" onkeyup="countwords()" required></textarea>
+                </div>
+                <span id="add_count"></span><br>
+
+                <div class="form-group">
+                    <fieldset>
+                        <legend>Hobbies</legend>
+                        <div class="form-check">
+                            <input type="checkbox" name="hobbies" value="sports" id="sport" class="form-check-input" onclick="checkbox_hobby()">
+                            <label class="form-check-label" for="sport">Sports</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="hobbies" value="music" id="music" class="form-check-input" onclick="checkbox_hobby()">
+                            <label class="form-check-label" for="music">Music</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="hobbies" value="reading" id="read" class="form-check-input" onclick="checkbox_hobby()">
+                            <label class="form-check-label" for="read">Reading</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" name="hobbies" value="other" id="other" class="form-check-input" onclick="checkbox_hobby()" checked>
+                            <label class="form-check-label" for="read">Other</label>
+                        </div>
+                    
+                    </fieldset>
+                </div>
+                <span id="hobby_tick"></span><br>
+
+                <div class="form-group">
+                    <fieldset>
+                        <legend>Gender</legend>
+                        <div class="form-check">
+                            <input type="radio" name="gender" value="male" id="0" class="form-check-input" checked>
+                            <label class="form-check-label" for="male">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="gender" value="female" id="1" class="form-check-input">
+                            <label class="form-check-label" for="female">Female</label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input name="checkbox" id="checkbox" type="checkbox" class="form-check-input" required />
+                        <label class="form-check-label" for="checkbox">I agree to these <a href="#">Terms and Conditions</a>.</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submit_button">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <script>
+    function checkbox_hobby() {
+      var hobby_1 = document.getElementById('sport').checked;
+      var hobby_2 = document.getElementById('music').checked;
+      var hobby_3 = document.getElementById('read').checked;
+      var hobby_4 = document.getElementById('other').checked;
+      var createButton = document.getElementById('submit_button');
+      var flag = false
+      if (!hobby_1 && !hobby_2 && !hobby_3 && !hobby_4) {
+        
+        createButton.disabled = true;
+        createButton.style.opacity = 0.4;
+        flag = true
+      }
+      else{
+        createButton.disabled = false;
+        createButton.style.opacity = 1;
+        flag = false
+      }
+      if (flag) {
+        document.getElementById('hobby_tick').style.color = 'red'
+        document.getElementById('hobby_tick').innerHTML = ("Please check at least one checkbox for Hobbies");
+      }
+      else{
+        document.getElementById('hobby_tick').innerHTML = ("");
+      }
+  }
+
+   // to check if adress is longer than 15 words or not
+   function countwords() {
+    let res = [];
+    let str = document.querySelector("#address").value.replace(/[\t\n\r\.\?\!]/gm, " ").split(" ");
+    str.map((s) => {
+      let trimStr = s.trim();
+      if (trimStr.length > 0) {
+        res.push(trimStr);
+      }
+    });
+    if (res.length < 15) {
+      document.getElementById("short_add").style.color = "red";
+      document.getElementById("short_add").innerHTML = "Address should be longer than 15 words";
+    } else {
+      document.getElementById("short_add").innerHTML = "";
+    }
+   }
+    </script>
+
+</body>
+
+</html>
